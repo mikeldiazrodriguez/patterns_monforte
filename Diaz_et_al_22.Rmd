@@ -213,12 +213,33 @@ dist_eucl_hidrologia <- projectRaster(dist_eucl_hidro, elevation)
 ```
 
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
-#Creación del modelo de regresión generalizada
-covariates <- stack(elevation, tot_inso, aspect, slope, visual_prom, tpi100, wetness_cost, geol_cost, hydro_cost, lcp_c, wind, tpi500)
-names(covariates) <- c("elevation", "tot_inso", "aspect", "slope", "visual_prom", "tpi100", "wetness_cost", "geol_cost","hydro_cost", "lcp_c", "wind", "tpi500")
+# GLM creation
+covariates <- stack(elevation, tot_inso, aspect, slope, visual_prom, tpi100, wetness_cost, geol_cost, hydro_cost, lcp_cost, wind, tpi500)
+names(covariates) <- c("elevation", "tot_inso", "aspect", "slope", "visual_prom", "tpi100", "wetness_cost", "geol_cost","hydro_cost", "lcp_cost", "wind", "tpi500")
 locvals <- data.frame(extract(covariates, locations))
 locvals$site <- locations$CID==1
+
+mod <- glm(site~elevation+tot_inso+aspect+slope+visual_prom+tpi100+wetness_cost+geol_cost+hydro_cost+lcp_cost+wind+tpi500, data=locvals, family=binomial(logit))
+summary(mod)
+mod2 <- stepAIC(mod)  # More oncs
+mod2$anova
+
+# Table with the results of predictive analysis
+summary(mod2) 
+logodds <- 7.2294176+(elevation* -0.0167014)+(pendiente_grados*-0.3456405)+(prominencia_visual*0.0458370)+(coste_branhas*-0.0017355)+(coste_hidrologia*0.0007585)
+par(mfrow=c(1,1))
+plot(logodds)
+
+# Predictive map creation
+relprob <- (exp(logodds))/(1+(exp(logodds)))
+par(mfrow=c(1,1))
+plot(relprob, col=terrain.colors(8, alpha=1), legend=TRUE, axes=TRUE, main="GLM Monforte")
+points(locations[locations$CID==1,], pch=19, cex=0.3, col="red")
+
+# Output predictive surface .asc 
+writeRaster(relprob,filename = "predicsurface2.asc", datatype="ascii", overwrite=TRUE)
 ```
+
 
 ### Kernel density estimation methods for cluster analysis selection
 
