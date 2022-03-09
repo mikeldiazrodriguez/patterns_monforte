@@ -214,8 +214,8 @@ dist_eucl_hidrologia <- projectRaster(dist_eucl_hidro, elevation)
 
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
 #Creación del modelo de regresión generalizada
-covariates <- stack(elevation, tot_inso, aspect, slope, visual_prom, tpi100, wetness_cost, geol_cost,hydro_cost, coste_rutas, wind, tpi500)
-names(covariates) <- c("elevation", "tot_inso", "aspect", "slope", "visual_prom", "tpi100", "wetness_cost", "coste_geologia","coste_hidrologia", "coste_rutas", "viento", "tpi500")
+covariates <- stack(elevation, tot_inso, aspect, slope, visual_prom, tpi100, wetness_cost, geol_cost, hydro_cost, lcp_c, wind, tpi500)
+names(covariates) <- c("elevation", "tot_inso", "aspect", "slope", "visual_prom", "tpi100", "wetness_cost", "geol_cost","hydro_cost", "lcp_c", "wind", "tpi500")
 locvals <- data.frame(extract(covariates, locations))
 locvals$site <- locations$CID==1
 ```
