@@ -47,7 +47,7 @@ setwd("~/shp")
 BNG = "+init=epsg:25829"
 
 # add the study area 
-studyarea <- readShapePoly("Galicia.shp", proj4string = CRS(BNG))
+studyarea <- readShapePoly("study_area.shp", proj4string = CRS(BNG))
 
 # and check it is worked
 plot(studyarea)
@@ -76,7 +76,7 @@ window <- as.owin(studyarea)
 plot(window)
 
 # create a ppp object
-sitesSub.ppp <- ppp(x=sitesSub$Easting,y=sitesSub$Northing,window=window)
+sitesSub.ppp <- ppp(x=sitesSub$UTMX,y=sitesSub$UTMY,window=window)
 
 # plot the sites and the studyarea
 plot(sitesSub.ppp,pch=16,cex=0.5, main="Palaeolithic archaeological sites")
@@ -86,15 +86,62 @@ plot(sitesSub.ppp,pch=16,cex=0.5, main="Palaeolithic archaeological sites")
 
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
 # Shapiro-Wilk Test
-shapiro.test(sites$Easting)
+shapiro.test(sites$UTMX)
 ```
 
 ### K-S Test
 
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
 # K-S sites vs random sites
-ks.test(sites$Easting,random_sites$Easting)
+ks.test(sites$UTMX,random_sites$UTMX)
 ```
+
+### X2 Test
+
+```{r echo=TRUE, results='hide'}
+# X2 test sites
+chisq.test(sites$UTMX,sites$UTMX)
+```
+
+### K, L and G Functions
+
+```{r echo=TRUE, results='hide'}
+# set the simulations
+sims <- 99
+# to get 95% envelope
+nrank <- round((sims + 1) / 100 * 2.5, 0) 
+
+# Kfunction sites
+Kfunction <- envelope(sitesSub.ppp,Kest, nsim=sims,rank=nrank, correction="best") 
+# Homogeneous
+plot(Kfunction,main="a. K Function (homogeneous)",legend=FALSE)
+pdf(file = "~output/Figure4a.pdf",width = 5,height = 12)
+# Inhomogeneous
+KinhomFunction <- envelope(sitesSub.ppp,Kinhom, nsim=sims,rank=nrank, correction="best") 
+plot(KinhomFunction,main="b. K Function (inhomogeneous)",legend=FALSE)
+pdf(file = "~output/Figure4b.pdf",width = 5,height = 12)
+
+# LFunction sites
+LFunction <- envelope(sitesSub.ppp,Lest, nsim=sims,rank=nrank, correction="best")
+# Homogeneous
+plot(LFunction,main="c. L Function (homogeneous)",legend=FALSE)
+pdf(file = "~output/Figure4c.pdf",width = 5,height = 12)
+# Inhomogeneous
+LinhomFunction <- envelope(sitesSub.ppp,Linhom, nsim=sims,rank=nrank, correction="best")
+plot(LinhomFunction,main="d. L Function (inhomogeneous)",legend=FALSE) 
+pdf(file = "~output/Figure4d.pdf",width = 5,height = 12)
+
+# GFunction sites
+GFunction <- envelope(sitesSub.ppp,Gest, nsim=sims,rank=nrank, correction="best") 
+# Homogeneous
+plot(GFunction,main="e. G Function (homogeneous)",legend=FALSE) 
+pdf(file = "~output/Figure4e.pdf",width = 5,height = 12)
+# Inhomogeneous
+GinhomFunction <- envelope(sitesSub.ppp,Ginhom, nsim=sims,rank=nrank, correction="best") 
+plot(GinhomFunction,main="f. G Function (inhomogeneous)",legend=FALSE) 
+pdf(file = "~output/Figure4f.pdf",width = 5,height = 12)
+```
+
 
 ### Kernel density estimation methods for cluster analysis selection
 
