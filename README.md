@@ -3,4 +3,5 @@ This repository contains data and code to enable reproducibility of the paper "A
 
 ## Repository structure
 /shp/ ... folder with the layers of the sites, the random points and the study area in vector format.
+
 /xls/ ... contains XLS files with the data of the variables to execute Pearson's Correlation.
