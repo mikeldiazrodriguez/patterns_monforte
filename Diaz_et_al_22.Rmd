@@ -201,9 +201,9 @@ goat_c <- raster("goat_cost_monforte.tiff")
 goat_cost <- projectRaster(goat_c, elevation)
 geol_c <- raster("geology_cost_monforte.tiff")
 geol_cost <- projectRaster(geol_c, elevation)
+hydro_c <- raster("hydrology_cost_monforte.tiff")
+hydro_cost <- projectRaster(hydro_c, elevation)
 
-c_hidro <- raster("coste_hidrologia_monforte.tiff")
-coste_hidrologia <- projectRaster(c_hidro, elevation)
 c_rutas <- raster("coste_rutas_monforte.tiff")
 coste_rutas <- projectRaster(c_rutas, elevation)
 dist_eucl_geo <- raster("distancia_euclidiana_geologia_monforte2.tif")
@@ -214,7 +214,7 @@ dist_eucl_hidrologia <- projectRaster(dist_eucl_hidro, elevation)
 
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
 #Creación del modelo de regresión generalizada
-covariates <- stack(elevation, tot_inso, aspect, slope, visual_prom, tpi100, wetness_cost, geol_cost,coste_hidrologia, coste_rutas, wind, tpi500)
+covariates <- stack(elevation, tot_inso, aspect, slope, visual_prom, tpi100, wetness_cost, geol_cost,hydro_cost, coste_rutas, wind, tpi500)
 names(covariates) <- c("elevation", "tot_inso", "aspect", "slope", "visual_prom", "tpi100", "wetness_cost", "coste_geologia","coste_hidrologia", "coste_rutas", "viento", "tpi500")
 locvals <- data.frame(extract(covariates, locations))
 locvals$site <- locations$CID==1
