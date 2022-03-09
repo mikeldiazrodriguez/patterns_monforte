@@ -200,8 +200,7 @@ wetness_cost <- projectRaster(wetness_c, elevation)
 goat_c <- raster("goat_cost_monforte.tiff")
 goat_cost <- projectRaster(goat_c, elevation)
 
-c_ciervos <- raster("coste_ciervos_monforte.tiff")
-coste_ciervos <- projectRaster(c_ciervos, elevation)
+
 c_geo2 <- raster("coste_geologia_monforte2.tiff")
 coste_geologia <- projectRaster(c_geo2, elevation)
 c_hidro <- raster("coste_hidrologia_monforte.tiff")
