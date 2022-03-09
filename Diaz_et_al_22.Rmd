@@ -1,7 +1,7 @@
 ---
 title: "A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin (NW Iberian Peninsula)"
 author: "Mikel Diaz-Rodriguez and Ramon Fabregas-Valcarce"
-date: "March 8th, 2022"
+date: "March 9th, 2022"
 output:
   html_document: default
   pdf_document: default
@@ -31,7 +31,7 @@ ipak <- function(pkg){
   sapply(pkg, require, character.only = TRUE)
 }
 # install all the packages
-packages <- c("spatstat", "sp", "rgeos", "maptools", "GISTools", "ggplot2", "fpc", "plyr", "gridExtra", "dbscan", "tidyverse", "cluster", "factoextra", "gridExtra", "readxl", "NbClust", "percopackage", "rgdal", "igraph")
+packages <- c("GGally", "spatstat","dismo", "MASS", "ggplot2", "plyr", "sp","maps","maptools","raster","geostatsp","rgdal")
 ipak(packages)
 ```
 
@@ -142,6 +142,36 @@ plot(GinhomFunction,main="f. G Function (inhomogeneous)",legend=FALSE)
 pdf(file = "~output/Figure4f.pdf",width = 5,height = 12)
 ```
 
+# Pearson's Correlation
+
+```{r echo=TRUE, results='hide'}
+# Set the working directory
+setwd("~/xls")
+
+# Data
+sample_data <- data.frame(v1=dat$altitude,v2=dat$wetland_cost,v3=dat$goat_cost,v5=dat$geology_cost,v6=dat$hydrology_cost,v7=dat$lcp_cost,v8=dat$eucl_dist_geo,v9=dat$eucl_dist_hydro,v10=dat$dif_ins,v11=dat$dir_ins,v12=dat$tot_ins,v13=dat$aspect,v14=dat$slope,v15=dat$vis_prom,v16=dat$tpi100,v17=dat$tpi500,v18=dat$tpi1000,v19=dat$wind)
+
+# Check correlations
+cor(sample_data)
+
+# Check correlations as scatterplots, distributions and correlation coeficient.
+ggpairs(sample_data)
+
+# Visualization
+ggcorr(sample_data, method=c("everything", "pearson"))
+
+# Export file
+pdf(file = "~output/Figure2a.pdf",width = 5,height = 12)
+```
+
+# GLM
+
+```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
+# set the working directory
+setwd("~/shp")
+# ad the shapefile
+locations <- readOGR(dsn="locations2.shp", layer="locations2")
+```
 
 ### Kernel density estimation methods for cluster analysis selection
 
