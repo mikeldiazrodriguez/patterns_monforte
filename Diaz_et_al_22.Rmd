@@ -169,8 +169,56 @@ pdf(file = "~output/Figure2a.pdf",width = 5,height = 12)
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
 # set the working directory
 setwd("~/shp")
+
 # ad the shapefile
-locations <- readOGR(dsn="locations2.shp", layer="locations2")
+locations <- readOGR(dsn="locations.shp", layer="locations")
+
+# set the working directory
+setwd("~/grids")
+
+# Import variables and set the same extent for everyone
+elevation <- raster("dem_monforte.tif")
+tot_ins <- raster("total_insolation_monforte.asc")
+tot_inso <- projectRaster(tot_ins, elevation)
+asp <- raster("aspect_monforte.tif")
+aspect <- projectRaster(asp, elevation)
+slop <- raster("slope_monforte.tif")
+slope <- projectRaster(slop, elevation)
+vis_prom <- raster("visual_prominence_monforte.tif")
+visual_prom <- projectRaster(vis_prom, elevation)
+tpi100_monf <- raster("tpi100_monforte.asc")
+tpi100 <- projectRaster(tpi100_monf, elevation)
+
+tpi500_monf <- raster("tpi500_monforte.asc")
+tpi500 <- projectRaster(tpi500_monf, elevation)
+
+wind_monf <- raster("wind_monforte.asc")
+wind <- projectRaster(wind_monf, elevation)
+
+c_branhas <- raster("coste_branhas_monforte.tiff")
+coste_branhas <- projectRaster(c_branhas, elevation)
+c_cabras <- raster("coste_cabras_monforte.tiff")
+coste_cabras <- projectRaster(c_cabras, elevation)
+c_ciervos <- raster("coste_ciervos_monforte.tiff")
+coste_ciervos <- projectRaster(c_ciervos, elevation)
+c_geo2 <- raster("coste_geologia_monforte2.tiff")
+coste_geologia <- projectRaster(c_geo2, elevation)
+c_hidro <- raster("coste_hidrologia_monforte.tiff")
+coste_hidrologia <- projectRaster(c_hidro, elevation)
+c_rutas <- raster("coste_rutas_monforte.tiff")
+coste_rutas <- projectRaster(c_rutas, elevation)
+dist_eucl_geo <- raster("distancia_euclidiana_geologia_monforte2.tif")
+dist_eucl_geologia <- projectRaster(dist_eucl_geo, elevation)
+dist_eucl_hidro <- raster("distancia_euclidiana_hidrologia_monforte2.tif")
+dist_eucl_hidrologia <- projectRaster(dist_eucl_hidro, elevation)
+```
+
+```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
+#Creación del modelo de regresión generalizada
+covariates <- stack(elevation, tot_inso, aspect, slope, visual_prom, tpi100, coste_branhas, coste_geologia,coste_hidrologia, coste_rutas, wind, tpi500)
+names(covariates) <- c("elevation", "tot_inso", "aspect", "slope", "visual_prom", "tpi100", "coste_branhas", "coste_geologia","coste_hidrologia", "coste_rutas", "viento", "tpi500")
+locvals <- data.frame(extract(covariates, locations))
+locvals$site <- locations$CID==1
 ```
 
 ### Kernel density estimation methods for cluster analysis selection
