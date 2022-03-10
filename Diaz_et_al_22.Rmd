@@ -239,6 +239,31 @@ points(locations[locations$CID==1,], pch=19, cex=0.3, col="red")
 writeRaster(relprob,filename = "predicsurface2.asc", datatype="ascii", overwrite=TRUE)
 ```
 
+# Intensity analysis
+### Data import
+
+```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
+elevation <- raster("grids/dem_monforte.tif")
+studyarea <- readOGR(dsn="shp/study_area.shp", layer="study_area")
+sites <- readOGR(dsn="shp/sites.shp", layer="sites")
+area <- as(studyarea,"owin")
+sppp <- ppp(x=sites$utmx, y=sites$utmy, window=area)
+slope <- raster("grids/pend_grad-monf.tif")
+wetness_cost <- raster("grids/coste_branhas_monforte")
+hydro_cost <- raster("grids/coste_hidrologia_monforte")
+visual_prom <- raster("grids/prominencia_visual_monforte.tif")
+```
+
+### Achieve monovariate patron
+
+```{r echo=TRUE, results='hide'}
+elev <- as.im(as(elevacion,"SpatialGridDataFrame"))
+pend <- as.im(as(pendiente,"SpatialGridDataFrame"))
+chumed <- as.im(as(coste_humed,"SpatialGridDataFrame"))
+chidro <- as.im(as(coste_hidro,"SpatialGridDataFrame"))
+provi <- as.im(as(prom_visu,"SpatialGridDataFrame"))
+```
+
 
 ### Kernel density estimation methods for cluster analysis selection
 
