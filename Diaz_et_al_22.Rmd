@@ -356,7 +356,20 @@ plot(p1)
 pdf(file = "~output/Figura2B.pdf",width = 5,height = 12)
 ```
 
+### Cost to potential hydrology
 
+```{r echo=TRUE, results='hide'}
+altplot2$Cost <- factor (altplot2$Cost, levels = c("0-1000", "1000-2000","2000-3000","3000-4000","4000-5000","5000-6000","6000-7000","7000-8000","8000-9000","9000-10000","10000-11000","11000-12000","12000-13000"))  
+p2 <- ggplot(altplot2,aes(Cost,Percentage)) + geom_bar(data=subset(altplot2,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot2,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=12),axis.title=element_text(size=14,face="bold"))+ labs(title = "", y = "Percentage", x = "Cost to potental hydrology (seconds)")   
+p2 <- p2 + theme( 
+  panel.background = element_rect(fill = "transparent",colour = NA), 
+  panel.grid.minor = element_blank(), 
+  panel.grid.major = element_blank(), 
+  plot.background = element_rect(fill = "transparent",colour = NA) 
+)
+plot(p2)
+pdf(file = "~output/Figura2C.pdf",width = 5,height = 12)
+```
 
 
 ### Kernel density estimation methods for cluster analysis selection
