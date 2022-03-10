@@ -194,8 +194,8 @@ tpi500 <- projectRaster(tpi500_monf, elevation)
 
 wind_monf <- raster("wind_monforte.asc")
 wind <- projectRaster(wind_monf, elevation)
-wetness_c <- raster("wetness_cost_monforte.tiff")
-wetness_cost <- projectRaster(wetness_c, elevation)
+wetland_c <- raster("wetland_cost_monforte.tiff")
+wetland_cost <- projectRaster(wetland_c, elevation)
 goat_c <- raster("goat_cost_monforte.tiff")
 goat_cost <- projectRaster(goat_c, elevation)
 geol_c <- raster("geology_cost_monforte.tiff")
@@ -213,19 +213,19 @@ dist_eucl_hidrologia <- projectRaster(dist_eucl_hidro, elevation)
 
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
 # GLM creation
-covariates <- stack(elevation, tot_inso, aspect, slope, visual_prom, tpi100, wetness_cost, geol_cost, hydro_cost, lcp_cost, wind, tpi500)
-names(covariates) <- c("elevation", "tot_inso", "aspect", "slope", "visual_prom", "tpi100", "wetness_cost", "geol_cost","hydro_cost", "lcp_cost", "wind", "tpi500")
+covariates <- stack(elevation, tot_inso, aspect, slope, visual_prom, tpi100, wetland_cost, geol_cost, hydro_cost, lcp_cost, wind, tpi500)
+names(covariates) <- c("elevation", "tot_inso", "aspect", "slope", "visual_prom", "tpi100", "wetland_cost", "geol_cost","hydro_cost", "lcp_cost", "wind", "tpi500")
 locvals <- data.frame(extract(covariates, locations))
 locvals$site <- locations$CID==1
 
-mod <- glm(site~elevation+tot_inso+aspect+slope+visual_prom+tpi100+wetness_cost+geol_cost+hydro_cost+lcp_cost+wind+tpi500, data=locvals, family=binomial(logit))
+mod <- glm(site~elevation+tot_inso+aspect+slope+visual_prom+tpi100+wetland_cost+geol_cost+hydro_cost+lcp_cost+wind+tpi500, data=locvals, family=binomial(logit))
 summary(mod)
 mod2 <- stepAIC(mod)  # More oncs
 mod2$anova
 
 # Table with the results of predictive analysis
 summary(mod2) 
-logodds <- 7.2294176+(elevation* -0.0167014)+(pendiente_grados*-0.3456405)+(prominencia_visual*0.0458370)+(coste_branhas*-0.0017355)+(coste_hidrologia*0.0007585)
+logodds <- 7.2294176+(elevation* -0.0167014)+(slope*-0.3456405)+(visual_prom*0.0458370)+(wetland_cost*-0.0017355)+(hydro_cost*0.0007585)
 par(mfrow=c(1,1))
 plot(logodds)
 
@@ -249,7 +249,7 @@ sites <- readOGR(dsn="shp/sites.shp", layer="sites")
 area <- as(studyarea,"owin")
 sppp <- ppp(x=sites$utmx, y=sites$utmy, window=area)
 slope <- raster("grids/slope_monforte.tif")
-wetness_cost <- raster("grids/wetness_cost_monforte.tiff")
+wetland_cost <- raster("grids/wetland_cost_monforte.tiff")
 hydro_cost <- raster("grids/hydrology_cost_monforte.tiff")
 visual_prom <- raster("grids/visual_prominence_monforte.tif")
 ```
@@ -259,7 +259,7 @@ visual_prom <- raster("grids/visual_prominence_monforte.tif")
 ```{r echo=TRUE, results='hide'}
 elev <- as.im(as(elevation,"SpatialGridDataFrame"))
 slo <- as.im(as(slope,"SpatialGridDataFrame"))
-wetn <- as.im(as(wetness_cost,"SpatialGridDataFrame"))
+wetl <- as.im(as(wetland_cost,"SpatialGridDataFrame"))
 hydro <- as.im(as(hydro_cost,"SpatialGridDataFrame"))
 vipro <- as.im(as(visual_prom,"SpatialGridDataFrame"))
 ```
@@ -269,7 +269,7 @@ vipro <- as.im(as(visual_prom,"SpatialGridDataFrame"))
 ```{r echo=TRUE, results='hide'}
 elev.rh <- rhohat(sppp, elev, confidence=0.95)
 slo.rh <- rhohat(sppp, slo, confidence=0.95)
-wetn.rh <- rhohat(sppp, wetn, confidence=0.95)
+wetl.rh <- rhohat(sppp, wetl, confidence=0.95)
 hydro.rh <- rhohat(sppp, hydro, confidence=0.95)
 vipro.rh <- rhohat(sppp, vipro, confidence=0.95)
 ```
@@ -277,11 +277,42 @@ vipro.rh <- rhohat(sppp, vipro, confidence=0.95)
 ### Elevation function
 
 ```{r echo=TRUE, results='hide'}
-plot(elev.rh, main= "", xlab="m.s.n.m", ylab="", xlim=c(250,500), legend=FALSE, cex.axis=0.9)
-legend("topleft", legend="Altitud", cex=0.9, bty="n", text.font=2)
+plot(elev.rh, main= "", xlab="m.a.s.l", ylab="", xlim=c(250,500), legend=FALSE, cex.axis=0.9)
+legend("topleft", legend="Altitude", cex=0.9, bty="n", text.font=2)
 pdf(file = "~output/Figura1B.pdf",width = 5,height = 12)
 ```
 
+### Slope function
+
+```{r echo=TRUE, results='hide'}
+plot(slo.rh, main= "", xlab="Grades", ylab="", xlim=c(0,6.8), legend=FALSE, cex.axis=0.9)
+legend("topleft", legend="Slope", cex=0.9, bty="n", text.font=2)
+pdf(file = "~output/Figura1C.pdf",width = 5,height = 12)
+```
+
+### Cost to potential hydrology
+
+```{r echo=TRUE, results='hide'}
+plot(hydro.rh, main= "", xlab="Seconds", ylab="", xlim=c(0,6500), legend=FALSE, cex.axis=0.9)
+legend("topleft", legend="Cost to potential hydrology", cex=0.9, bty="n", text.font=2)
+pdf(file = "~output/Figura1D.pdf",width = 5,height = 12)
+```
+
+### Cost to wetland areas
+
+```{r echo=TRUE, results='hide'}
+plot(wetl.rh, main= "", xlab="Seconds", ylab="", xlim=c(0,1150), legend=FALSE, cex.axis=0.9)
+legend("topleft", legend="Cost to wetland areas", cex=0.9, bty="n", text.font=2)
+pdf(file = "~output/Figura1E.pdf",width = 5,height = 12)
+```
+
+### Visual prominence
+
+```{r echo=TRUE, results='hide'}
+plot(vipro.rh, main= "", xlab="Index", ylab="", xlim=c(0,105), legend=FALSE, cex.axis=0.9)
+legend("topleft", legend="Visual prominence", cex=0.9, bty="n", text.font=2)
+pdf(file = "~output/Figura1F.pdf",width = 5,height = 12)
+```
 
 
 ### Kernel density estimation methods for cluster analysis selection
