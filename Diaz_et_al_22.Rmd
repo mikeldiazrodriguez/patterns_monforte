@@ -314,6 +314,19 @@ legend("topleft", legend="Visual prominence", cex=0.9, bty="n", text.font=2)
 pdf(file = "~output/Figura1F.pdf",width = 5,height = 12)
 ```
 
+# Barplots (sites vs terrain)
+
+### Import data
+
+```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
+altplot <- read.table(file="csv/altplot.csv",header=TRUE, sep=";")
+altplot1 <- read.table(file="csv/altplot1.csv",header=TRUE, sep=";")
+altplot2 <- read.table(file="csv/altplot2.csv",header=TRUE, sep=";")
+altplot3 <- read.table(file="csv/altplot3.csv",header=TRUE, sep=";")
+altplot4 <- read.table(file="csv/altplot4.csv",header=TRUE, sep=";")
+```
+
+
 
 ### Kernel density estimation methods for cluster analysis selection
 
