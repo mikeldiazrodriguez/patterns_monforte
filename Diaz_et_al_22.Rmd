@@ -31,7 +31,7 @@ ipak <- function(pkg){
   sapply(pkg, require, character.only = TRUE)
 }
 # install all the packages
-packages <- c("GGally", "spatstat","dismo", "MASS", "ggplot2", "plyr", "sp","maps","maptools","raster","geostatsp","rgdal")
+packages <- c("GGally", "spatstat", "dismo", "MASS", "ggplot2", "plyr", "sp", "maps", "maptools", "raster", "geostatsp", "rgdal")
 ipak(packages)
 ```
 
