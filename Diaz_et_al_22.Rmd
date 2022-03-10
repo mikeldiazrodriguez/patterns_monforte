@@ -342,6 +342,7 @@ pdf(file = "~output/Figura2A.pdf",width = 5,height = 12)
 ```
 
 
+
 ### Kernel density estimation methods for cluster analysis selection
 
 ```{r echo=TRUE, results='hide'}
