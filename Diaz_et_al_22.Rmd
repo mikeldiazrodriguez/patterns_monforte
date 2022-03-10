@@ -329,8 +329,8 @@ altplot4 <- read.table(file="csv/altplot4.csv",header=TRUE, sep=";")
 ### Altitude
 
 ```{r echo=TRUE, results='hide'}
-altplot$Altitud <- factor (altplot$Altitud, levels = c("0-100", "100-200","200-300","300-400","400-500","500-600","600-700","700-800","800-900","900-1000","1000-1100","1100-1200","1200-1300","1300-1400","1400-1500"))  
-p <- ggplot(altplot,aes(Altitud,Porcentaje)) + geom_bar(data=subset(altplot,Categoria=="Terreno"),stat="identity", fill="gray") + geom_line(data=subset(altplot,Categoria=="Yacimiento"), aes(group="Categoria", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=12),axis.title=element_text(size=14,face="bold")) + labs(title = "", y = "Porcentaje", x = "Altitud (msnm)")  
+altplot$Altitud <- factor (altplot$Altitude, levels = c("0-100", "100-200","200-300","300-400","400-500","500-600","600-700","700-800","800-900","900-1000","1000-1100","1100-1200","1200-1300","1300-1400","1400-1500"))  
+p <- ggplot(altplot,aes(Altitude,Percentage)) + geom_bar(data=subset(altplot,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=12),axis.title=element_text(size=14,face="bold")) + labs(title = "", y = "Percentage", x = "Altitude (masl)")  
 p <- p + theme( 
   panel.background = element_rect(fill = "transparent",colour = NA), 
   panel.grid.minor = element_blank(), 
