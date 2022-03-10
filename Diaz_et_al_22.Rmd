@@ -248,21 +248,40 @@ studyarea <- readOGR(dsn="shp/study_area.shp", layer="study_area")
 sites <- readOGR(dsn="shp/sites.shp", layer="sites")
 area <- as(studyarea,"owin")
 sppp <- ppp(x=sites$utmx, y=sites$utmy, window=area)
-slope <- raster("grids/pend_grad-monf.tif")
-wetness_cost <- raster("grids/coste_branhas_monforte")
-hydro_cost <- raster("grids/coste_hidrologia_monforte")
-visual_prom <- raster("grids/prominencia_visual_monforte.tif")
+slope <- raster("grids/slope_monforte.tif")
+wetness_cost <- raster("grids/wetness_cost_monforte.tiff")
+hydro_cost <- raster("grids/hydrology_cost_monforte.tiff")
+visual_prom <- raster("grids/visual_prominence_monforte.tif")
 ```
 
 ### Achieve monovariate patron
 
 ```{r echo=TRUE, results='hide'}
-elev <- as.im(as(elevacion,"SpatialGridDataFrame"))
-pend <- as.im(as(pendiente,"SpatialGridDataFrame"))
-chumed <- as.im(as(coste_humed,"SpatialGridDataFrame"))
-chidro <- as.im(as(coste_hidro,"SpatialGridDataFrame"))
-provi <- as.im(as(prom_visu,"SpatialGridDataFrame"))
+elev <- as.im(as(elevation,"SpatialGridDataFrame"))
+slo <- as.im(as(slope,"SpatialGridDataFrame"))
+wetn <- as.im(as(wetness_cost,"SpatialGridDataFrame"))
+hydro <- as.im(as(hydro_cost,"SpatialGridDataFrame"))
+vipro <- as.im(as(visual_prom,"SpatialGridDataFrame"))
 ```
+
+### Intensity function
+
+```{r echo=TRUE, results='hide'}
+elev.rh <- rhohat(sppp, elev, confidence=0.95)
+slo.rh <- rhohat(sppp, slo, confidence=0.95)
+wetn.rh <- rhohat(sppp, wetn, confidence=0.95)
+hydro.rh <- rhohat(sppp, hydro, confidence=0.95)
+vipro.rh <- rhohat(sppp, vipro, confidence=0.95)
+```
+
+### Elevation function
+
+```{r echo=TRUE, results='hide'}
+plot(elev.rh, main= "", xlab="m.s.n.m", ylab="", xlim=c(250,500), legend=FALSE, cex.axis=0.9)
+legend("topleft", legend="Altitud", cex=0.9, bty="n", text.font=2)
+pdf(file = "~output/Figura1B.pdf",width = 5,height = 12)
+```
+
 
 
 ### Kernel density estimation methods for cluster analysis selection
