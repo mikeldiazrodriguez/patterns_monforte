@@ -1,7 +1,7 @@
 ---
 title: "A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin (NW Iberian Peninsula)"
 author: "Mikel Diaz-Rodriguez and Ramon Fabregas-Valcarce"
-date: "March 9th, 2022"
+date: "March 10th, 2022"
 output:
   html_document: default
   pdf_document: default
@@ -48,15 +48,18 @@ BNG = "+init=epsg:25829"
 
 # add the study area 
 studyarea <- readShapePoly("study_area.shp", proj4string = CRS(BNG))
+studyarea <- readOGR(dsn="study_area.shp", layer="study_area")
 
 # and check it is worked
 plot(studyarea)
 
 # add the sites
 sites <- readShapePoints("sites.shp", proj4string = CRS(BNG))
+sites <- readOGR(dsn="sites.shp", layer="sites")
 
 # add the random points
 random_sites <- readShapePoints("random_sites.shp", proj4string = CRS(BNG))
+random_sites <- readOGR(dsn="random_sites.shp", layer="random_sites")
 
 # plot the studyarea and the sites and check everything looks ok
 plot(sites, col="blue", pch=20, add=T)
