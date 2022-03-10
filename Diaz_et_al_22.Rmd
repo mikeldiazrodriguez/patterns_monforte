@@ -341,6 +341,22 @@ plot(p)
 pdf(file = "~output/Figura2A.pdf",width = 5,height = 12)
 ```
 
+### Slope
+
+```{r echo=TRUE, results='hide'}
+altplot1$Slope <- factor (altplot1$Slope, levels = c("0-5", "5-10","10-15","15-20","20-25","25-30","30-35","35-40","40-45","45-50","50-55","55-60","60-65"))  
+p1 <- ggplot(altplot1,aes(Slope,Percentage)) + geom_bar(data=subset(altplot1,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot1,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=12),axis.title=element_text(size=14,face="bold"))+ labs(title = "", y = "Percentage", x = "Slope (grades)")   
+p1 <- p1 + theme( 
+  panel.background = element_rect(fill = "transparent",colour = NA), 
+  panel.grid.minor = element_blank(), 
+  panel.grid.major = element_blank(), 
+  plot.background = element_rect(fill = "transparent",colour = NA) 
+)
+plot(p1)
+pdf(file = "~output/Figura2B.pdf",width = 5,height = 12)
+```
+
+
 
 
 ### Kernel density estimation methods for cluster analysis selection
