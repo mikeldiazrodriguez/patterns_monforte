@@ -11,3 +11,23 @@ This repository contains data and code to enable reproducibility of the paper "A
 /xls/ ... contains XLS files with the data of the variables to execute Pearson's Correlation.
 
 ## R Packages used
+[GGally](https://cran.r-project.org/web/packages/GGally/index.html) - This package is a plotting system based on the grammar of graphics.
+
+[readxl](https://cran.r-project.org/web/packages/readxl/index.html) - Package for read excel files.
+
+[rgdal](https://cran.r-project.org/web/packages/rgdal/index.html) - Provides bindings to the “GDAL” and “PROJ” library.
+
+[rgeos](https://cran.r-project.org/web/packages/rgeos/index.html) - Package for topology operations on geometries.
+
+[sp](https://cran.r-project.org/web/packages/sp/index.html) - Classes and methods for spatial data.
+
+[spatstat](https://cran.r-project.org/web/packages/spatstat/index.html) - Toolbox for analysing Spatial Point Patterns.
+
+[dismo](https://cran.r-project.org/web/packages/dismo/dismo.pdf) - Methods for species distribution modelling.
+
+[MASS](https://cran.r-project.org/web/packages/MASS/MASS.pdf) - Functions and datasets to support Venables and Ripley.
+
+[ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html) - Package for creating graphics.
+
+[plyr](https://cran.r-project.org/web/packages/plyr/index.html) - Set of tools that solves problems relates with applying or combining data.
+
