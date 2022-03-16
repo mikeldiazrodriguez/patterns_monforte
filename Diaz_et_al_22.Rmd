@@ -103,7 +103,7 @@ ks.test(sites$UTMX,random_sites$UTMX)
 
 ```{r echo=TRUE, results='hide'}
 # X2 test sites
-chisq.test(sites$UTMX,sites$UTMX)
+chisq.test(sites$UTMX,random_sites$UTMX)
 ```
 
 ### K, L and G Functions
