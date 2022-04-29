@@ -157,7 +157,7 @@ sample_data <- data.frame(v1=dat$altitude,v2=dat$wetland_cost,v3=dat$goat_cost,v
 # Check correlations
 cor(sample_data)
 
-# Check correlations as scatterplots, distributions and correlation coeficient.
+# Check correlations as scatterplots, distributions and correlation coefficient.
 ggpairs(sample_data)
 
 # Visualization
