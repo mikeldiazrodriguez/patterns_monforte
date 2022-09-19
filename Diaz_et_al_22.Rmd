@@ -40,14 +40,14 @@ ipak(packages)
 ### Import the data used in CSR analysis
 
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
-# set the working directory
+# set the working directory             
 setwd("~/shp")
 
 # set the projection 
 BNG = "+init=epsg:25829"
 
 # add the study area 
-studyarea <- readShapePoly("study_area.shp", proj4string = CRS(BNG))
+studyarea <- readShapePoly("Study_area.shp", proj4string = CRS(BNG))
 studyarea <- readOGR(dsn="study_area.shp", layer="study_area")
 
 # and check it is worked
@@ -85,25 +85,25 @@ sitesSub.ppp <- ppp(x=sitesSub$UTMX,y=sitesSub$UTMY,window=window)
 plot(sitesSub.ppp,pch=16,cex=0.5, main="Palaeolithic archaeological sites")
 ```
 
-### Shapiro-Wilk Test
+### Shapiro-Wilk Test (sites)
 
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
 # Shapiro-Wilk Test
 shapiro.test(sites$UTMX)
 ```
 
-### K-S Test
+### Shapiro-Wilk Test (random sites)
 
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
-# K-S sites vs random sites
-ks.test(sites$UTMX,random_sites$UTMX)
+# Shapiro-Wilk Test
+shapiro.test(random_sites$UTMX)
 ```
 
-### X2 Test
+### K-S Test
 
-```{r echo=TRUE, results='hide'}
-# X2 test sites
-chisq.test(sites$UTMX,random_sites$UTMX)
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# K-S sites vs random sites
+ks.test(sites$UTMX,random_sites$UTMX)
 ```
 
 ### K, L and G Functions
@@ -114,35 +114,25 @@ sims <- 99
 # to get 95% envelope
 nrank <- round((sims + 1) / 100 * 2.5, 0) 
 
-# Kfunction sites
+# K, L and G functions 
 Kfunction <- envelope(sitesSub.ppp,Kest, nsim=sims,rank=nrank, correction="best") 
-# Homogeneous
-plot(Kfunction,main="a. K Function (homogeneous)",legend=FALSE)
-pdf(file = "~output/Figure4a.pdf",width = 5,height = 12)
-# Inhomogeneous
-KinhomFunction <- envelope(sitesSub.ppp,Kinhom, nsim=sims,rank=nrank, correction="best") 
-plot(KinhomFunction,main="b. K Function (inhomogeneous)",legend=FALSE)
-pdf(file = "~output/Figure4b.pdf",width = 5,height = 12)
-
-# LFunction sites
+KinhomFunction <- envelope(sitesSub.ppp,Kinhom, nsim=sims,rank=nrank, correction="best")
 LFunction <- envelope(sitesSub.ppp,Lest, nsim=sims,rank=nrank, correction="best")
-# Homogeneous
-plot(LFunction,main="c. L Function (homogeneous)",legend=FALSE)
-pdf(file = "~output/Figure4c.pdf",width = 5,height = 12)
-# Inhomogeneous
 LinhomFunction <- envelope(sitesSub.ppp,Linhom, nsim=sims,rank=nrank, correction="best")
-plot(LinhomFunction,main="d. L Function (inhomogeneous)",legend=FALSE) 
-pdf(file = "~output/Figure4d.pdf",width = 5,height = 12)
+GFunction <- envelope(sitesSub.ppp,Gest, nsim=sims,rank=nrank, correction="best")
+GinhomFunction <- envelope(sitesSub.ppp,Ginhom, nsim=sims,rank=nrank, correction="best")
 
-# GFunction sites
-GFunction <- envelope(sitesSub.ppp,Gest, nsim=sims,rank=nrank, correction="best") 
-# Homogeneous
+# create Figure 2
+par(mar=c(4, 4, 4, 4), mfrow=c(3,2))
+plot(Kfunction,main="a. K Function (homogeneous)",legend=FALSE)
+plot(KinhomFunction,main="b. K Function (inhomogeneous)",legend=FALSE)
+plot(LFunction,main="c. L Function (homogeneous)",legend=FALSE)
+plot(LinhomFunction,main="d. L Function (inhomogeneous)",legend=FALSE) 
 plot(GFunction,main="e. G Function (homogeneous)",legend=FALSE) 
-pdf(file = "~output/Figure4e.pdf",width = 5,height = 12)
-# Inhomogeneous
-GinhomFunction <- envelope(sitesSub.ppp,Ginhom, nsim=sims,rank=nrank, correction="best") 
-plot(GinhomFunction,main="f. G Function (inhomogeneous)",legend=FALSE) 
-pdf(file = "~output/Figure4f.pdf",width = 5,height = 12)
+plot(GinhomFunction,main="f. G Function (inhomogeneous)",legend=FALSE)
+par(mfrow=c(1,1))
+png(file = "~/Figure2.png",width = 900,height = 1200)
+dev.off()
 ```
 
 # Pearson's Correlation
@@ -150,6 +140,9 @@ pdf(file = "~output/Figure4f.pdf",width = 5,height = 12)
 ```{r echo=TRUE, results='hide'}
 # Set the working directory
 setwd("~/xls")
+
+# import data
+dat <- read.table(file="dat.csv",header=TRUE, sep=";", stringsAsFactors=F, dec=".")
 
 # Data
 sample_data <- data.frame(v1=dat$altitude,v2=dat$wetland_cost,v3=dat$goat_cost,v5=dat$geology_cost,v6=dat$hydrology_cost,v7=dat$lcp_cost,v8=dat$eucl_dist_geo,v9=dat$eucl_dist_hydro,v10=dat$dif_ins,v11=dat$dir_ins,v12=dat$tot_ins,v13=dat$aspect,v14=dat$slope,v15=dat$vis_prom,v16=dat$tpi100,v17=dat$tpi500,v18=dat$tpi1000,v19=dat$wind)
@@ -164,7 +157,7 @@ ggpairs(sample_data)
 ggcorr(sample_data, method=c("everything", "pearson"))
 
 # Export file
-pdf(file = "~output/Figure2a.pdf",width = 5,height = 12)
+png(file = "~/Figure3.png",width = 900,height = 1200)
 ```
 
 # GLM
