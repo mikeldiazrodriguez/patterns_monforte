@@ -243,7 +243,7 @@ elevation <- raster("grids/dem_monforte.tif")
 studyarea <- readOGR(dsn="shp/study_area.shp", layer="study_area")
 sites <- readOGR(dsn="shp/sites.shp", layer="sites")
 area <- as(studyarea,"owin")
-sppp <- ppp(x=sites$utmx, y=sites$utmy, window=area)
+sppp <- ppp(x=sites$UTMX, y=sites$UTMY, window=area)
 slope <- raster("grids/slope_monforte.tif")
 wetland_cost <- raster("grids/wetland_cost_monforte.tiff")
 hydro_cost <- raster("grids/hydrology_cost_monforte.tiff")
@@ -270,44 +270,18 @@ hydro.rh <- rhohat(sppp, hydro, confidence=0.95)
 vipro.rh <- rhohat(sppp, vipro, confidence=0.95)
 ```
 
-### Elevation function
+### Create Figure 5
 
 ```{r echo=TRUE, results='hide'}
-plot(elev.rh, main= "", xlab="m.a.s.l", ylab="", xlim=c(250,500), legend=FALSE, cex.axis=0.9)
-legend("topleft", legend="Altitude", cex=0.9, bty="n", text.font=2)
-pdf(file = "~output/Figura1B.pdf",width = 5,height = 12)
-```
-
-### Slope function
-
-```{r echo=TRUE, results='hide'}
-plot(slo.rh, main= "", xlab="Grades", ylab="", xlim=c(0,6.8), legend=FALSE, cex.axis=0.9)
-legend("topleft", legend="Slope", cex=0.9, bty="n", text.font=2)
-pdf(file = "~output/Figura1C.pdf",width = 5,height = 12)
-```
-
-### Cost to potential hydrology
-
-```{r echo=TRUE, results='hide'}
-plot(hydro.rh, main= "", xlab="Seconds", ylab="", xlim=c(0,6500), legend=FALSE, cex.axis=0.9)
-legend("topleft", legend="Cost to potential hydrology", cex=0.9, bty="n", text.font=2)
-pdf(file = "~output/Figura1D.pdf",width = 5,height = 12)
-```
-
-### Cost to wetland areas
-
-```{r echo=TRUE, results='hide'}
-plot(wetl.rh, main= "", xlab="Seconds", ylab="", xlim=c(0,1150), legend=FALSE, cex.axis=0.9)
-legend("topleft", legend="Cost to wetland areas", cex=0.9, bty="n", text.font=2)
-pdf(file = "~output/Figura1E.pdf",width = 5,height = 12)
-```
-
-### Visual prominence
-
-```{r echo=TRUE, results='hide'}
-plot(vipro.rh, main= "", xlab="Index", ylab="", xlim=c(0,105), legend=FALSE, cex.axis=0.9)
-legend("topleft", legend="Visual prominence", cex=0.9, bty="n", text.font=2)
-pdf(file = "~output/Figura1F.pdf",width = 5,height = 12)
+par(mar=c(4, 4, 4, 4), mfrow=c(3,2))
+plot(elevation.rh, main="a. Altitude", xlab="m.a.s.l.", ylab="", legend=FALSE, cex.axis=0.9)
+plot(d_rivers.rh, main="b. Cost to potential hydrology cells", xlab="Seconds", ylab="", legend=FALSE, cex.axis=0.9)
+plot(d_edges.rh, main="c. Cost to potential wetland cells", xlab="Seconds", ylab="", legend=FALSE, cex.axis=0.9)
+plot(tviewshed.rh, main="d. Visual Prominence", xlab="Visible cells number", ylab="", legend=FALSE, cex.axis=0.9)
+plot(slope.rh, main="e. Slope", xlab="Degrees", ylab="", legend=FALSE, cex.axis=0.9)
+par(mfrow=c(1,1))
+png(file = "~/Figure5.png",width = 900,height = 1200)
+dev.off()
 ```
 
 # Barplots (sites vs terrain)
