@@ -14,7 +14,7 @@ This repository contains data and code to enable reproducibility of the paper: D
 
 /grids/ ... folder with the layers of the covariates used in GLM.
 
-/output/ ... folder with the output files in PDF format.
+/output/ ... folder with the output files.
 
 /shp/ ... folder with the layers of the sites, the random points and the study area in vector format.
 
