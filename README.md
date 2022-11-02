@@ -83,7 +83,7 @@ Wickham, H., 2020. plyr: Tools for Splitting, Applying and Combining Data.
 
 Wickham, H., Bryan, J., Kalicinski, M., Valery, K., Leitienne, C., Colbert, B., Hoerl, D., Miller, E., 2019a. readxl: Read Excel Files.
 
-Wickham, H., Averick, M., Bryan, J., Chang, W., D’Agostino McGowan, L., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Lin Pedersen, T., Miller, E., Milton Bache, S., Müller, K., Ooms, J., Robinson, D., Piage Seidel, D., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., Yutani, H., 2019b. Welcome to the tidyverse. Journal of Open Source Software 4, 1686. doi:10.21105/joss.01686
+Wickham, H., Averick, M., Bryan, J., Chang, W., D’Agostino McGowan, L., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Lin Pedersen, T., Miller, E., Milton Bache, S., Müller, K., Ooms, J., Robinson, D., Piage Seidel, D., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., Yutani, H., 2019a. [Welcome to the tidyverse](https://joss.theoj.org/papers/10.21105/joss.01686). J. Open Source Softw. 4, 1686. doi:10.21105/joss.01686
 
 Wickham, H., Chang, W., Henry, L., Pedersen, T.L., Takahashi, K., Wilke, C., Woo, K., Yutani, H., Dunnington, D., 2020. ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics.
 
