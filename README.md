@@ -18,7 +18,7 @@ This repository contains data and code to enable reproducibility of the paper: D
 
 /shp/ ... folder with the layers of the sites, the random points and the study area in vector format.
 
-/xls/ ... contains XLS files with the data of the variables to execute Pearson's Correlation.
+Diaz_et_al_22.html ... html file to reproduce the analysis.
 
 Diaz_et_al_22.Rmd ... Rmarkdown file to reproduce the analysis.
 
