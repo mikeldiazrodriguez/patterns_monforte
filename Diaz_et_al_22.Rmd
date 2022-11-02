@@ -1,7 +1,7 @@
 ---
-title: "A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin (NW Iberian Peninsula)"
-author: "Mikel Diaz-Rodriguez and Ramon Fabregas-Valcarce"
-date: "March 10th, 2022"
+title: "A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin, NW Iberian Peninsula"
+author: "Mikel Diaz-Rodriguez, Ramon Fabregas-Valcarce and Augusto Perez-Alberti"
+date: "November 2th, 2022"
 output:
   html_document: default
   pdf_document: default
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(eval = FALSE,
 
 # Introduction
 
-This document contains code to enable reproducibility of the paper "A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin (NW Iberian Peninsula)".
+This document contains code to enable reproducibility of the paper "A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin, NW Iberian Peninsula".
 
 The steps indicated in the following lines allow to reproduce the analyses carried out.
 
@@ -31,7 +31,7 @@ ipak <- function(pkg){
   sapply(pkg, require, character.only = TRUE)
 }
 # install all the packages
-packages <- c("GGally", "spatstat", "dismo", "MASS", "ggplot2", "plyr", "sp", "maps", "maptools", "raster", "geostatsp", "rgdal")
+packages <- c("GGally", "readxl", "rgdal", "rgeos", "sp", "spatstat", "tidyverse", "dismo", "MASS", "ggplot2", "plyr", "maps", "maptools", "raster", "geostatsp", "patchwork")
 ipak(packages)
 ```
 
@@ -131,7 +131,7 @@ plot(LinhomFunction,main="d. L Function (inhomogeneous)",legend=FALSE)
 plot(GFunction,main="e. G Function (homogeneous)",legend=FALSE) 
 plot(GinhomFunction,main="f. G Function (inhomogeneous)",legend=FALSE)
 par(mfrow=c(1,1))
-png(file = "~/Figure2.png",width = 900,height = 1200)
+png(file = "~/output/Figure2.png",width = 900,height = 1200)
 dev.off()
 ```
 
@@ -157,7 +157,7 @@ ggpairs(sample_data)
 ggcorr(sample_data, method=c("everything", "pearson"))
 
 # Export file
-png(file = "~/Figure3.png",width = 900,height = 1200)
+png(file = "~/output/Figure3.png",width = 900,height = 1200)
 ```
 
 # GLM
@@ -184,10 +184,6 @@ vis_prom <- raster("visual_prominence_monforte.tif")
 visual_prom <- projectRaster(vis_prom, elevation)
 tpi100_monf <- raster("tpi100_monforte.asc")
 tpi100 <- projectRaster(tpi100_monf, elevation)
-
-tpi500_monf <- raster("tpi500_monforte.asc")
-tpi500 <- projectRaster(tpi500_monf, elevation)
-
 wind_monf <- raster("wind_monforte.asc")
 wind <- projectRaster(wind_monf, elevation)
 wetland_c <- raster("wetland_cost_monforte.tiff")
@@ -200,11 +196,6 @@ hydro_c <- raster("hydrology_cost_monforte.tiff")
 hydro_cost <- projectRaster(hydro_c, elevation)
 lcp_c <- raster("lcp_cost_monforte.tiff")
 lcp_cost <- projectRaster(lcp_c, elevation)
-
-dist_eucl_geo <- raster("distancia_euclidiana_geologia_monforte2.tif")
-dist_eucl_geologia <- projectRaster(dist_eucl_geo, elevation)
-dist_eucl_hidro <- raster("distancia_euclidiana_hidrologia_monforte2.tif")
-dist_eucl_hidrologia <- projectRaster(dist_eucl_hidro, elevation)
 ```
 
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
@@ -232,22 +223,22 @@ plot(relprob, col=terrain.colors(8, alpha=1), legend=TRUE, axes=TRUE, main="GLM 
 points(locations[locations$CID==1,], pch=19, cex=0.3, col="red")
 
 # Output predictive surface .asc 
-writeRaster(relprob,filename = "predicsurface2.asc", datatype="ascii", overwrite=TRUE)
+writeRaster(relprob,filename = "~/output/predicsurface2.asc", datatype="ascii", overwrite=TRUE)
 ```
 
 # Intensity analysis
 ### Data import
 
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
-elevation <- raster("grids/dem_monforte.tif")
-studyarea <- readOGR(dsn="shp/study_area.shp", layer="study_area")
-sites <- readOGR(dsn="shp/sites.shp", layer="sites")
+elevation <- raster("~/grids/dem_monforte.tif")
+studyarea <- readOGR(dsn="~shp/study_area.shp", layer="study_area")
+sites <- readOGR(dsn="~/shp/sites.shp", layer="sites")
 area <- as(studyarea,"owin")
 sppp <- ppp(x=sites$UTMX, y=sites$UTMY, window=area)
-slope <- raster("grids/slope_monforte.tif")
-wetland_cost <- raster("grids/wetland_cost_monforte.tiff")
-hydro_cost <- raster("grids/hydrology_cost_monforte.tiff")
-visual_prom <- raster("grids/visual_prominence_monforte.tif")
+slope <- raster("~/grids/slope_monforte.tif")
+wetland_cost <- raster("~/grids/wetland_cost_monforte.tiff")
+hydro_cost <- raster("~/grids/hydrology_cost_monforte.tiff")
+visual_prom <- raster("~/grids/visual_prominence_monforte.tif")
 ```
 
 ### Achieve monovariate patron
@@ -274,13 +265,13 @@ vipro.rh <- rhohat(sppp, vipro, confidence=0.95)
 
 ```{r echo=TRUE, results='hide'}
 par(mar=c(4, 4, 4, 4), mfrow=c(3,2))
-plot(elevation.rh, main="a. Altitude", xlab="m.a.s.l.", ylab="", legend=FALSE, cex.axis=0.9)
-plot(d_rivers.rh, main="b. Cost to potential hydrology cells", xlab="Seconds", ylab="", legend=FALSE, cex.axis=0.9)
-plot(d_edges.rh, main="c. Cost to potential wetland cells", xlab="Seconds", ylab="", legend=FALSE, cex.axis=0.9)
-plot(tviewshed.rh, main="d. Visual Prominence", xlab="Visible cells number", ylab="", legend=FALSE, cex.axis=0.9)
-plot(slope.rh, main="e. Slope", xlab="Degrees", ylab="", legend=FALSE, cex.axis=0.9)
+plot(elev.rh, main="a. Altitude", xlab="m.a.s.l.", ylab="", legend=FALSE, cex.axis=0.9)
+plot(slo.rh, main="b. Slope", xlab="Degrees", ylab="", legend=FALSE, cex.axis=0.9)
+plot(hydro.rh, main="c. Cost to potential hydrology cells", xlab="Seconds", ylab="", legend=FALSE, cex.axis=0.9)
+plot(wetl.rh, main="d. Cost to potential wetland cells", xlab="Seconds", ylab="", legend=FALSE, cex.axis=0.9)
+plot(vipro.rh, main="e. Visual Prominence", xlab="Visible cells number", ylab="", legend=FALSE, cex.axis=0.9)
 par(mfrow=c(1,1))
-png(file = "~/Figure5.png",width = 900,height = 1200)
+png(file = "~/output/Figure5.png",width = 900,height = 1200)
 dev.off()
 ```
 
@@ -299,75 +290,73 @@ altplot4 <- read.table(file="csv/altplot4.csv",header=TRUE, sep=";")
 ### Altitude
 
 ```{r echo=TRUE, results='hide'}
-altplot$Altitud <- factor (altplot$Altitude, levels = c("0-100", "100-200","200-300","300-400","400-500","500-600","600-700","700-800","800-900","900-1000","1000-1100","1100-1200","1200-1300","1300-1400","1400-1500"))  
-p <- ggplot(altplot,aes(Altitude,Percentage)) + geom_bar(data=subset(altplot,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=12),axis.title=element_text(size=14,face="bold")) + labs(title = "", y = "Percentage", x = "Altitude (masl)")  
+altplot$Altitude <- factor (altplot$Altitude, levels = c("0-100", "100-200","200-300","300-400","400-500","500-600","600-700","700-800","800-900","900-1000","1000-1100","1100-1200","1200-1300","1300-1400","1400-1500"))  
+p <- ggplot(altplot,aes(Altitude,Percentage)) + geom_bar(data=subset(altplot,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=8,face="bold"),axis.title=element_text(size=10,face="bold")) + labs(title = "a. Altitude", y = "Percentage", x = "m.a.s.l.")  
 p <- p + theme( 
   panel.background = element_rect(fill = "transparent",colour = NA), 
   panel.grid.minor = element_blank(), 
   panel.grid.major = element_blank(), 
   plot.background = element_rect(fill = "transparent",colour = NA) 
 )
-plot(p)
-pdf(file = "~output/Figura2A.pdf",width = 5,height = 12)
 ```
 
 ### Slope
 
 ```{r echo=TRUE, results='hide'}
 altplot1$Slope <- factor (altplot1$Slope, levels = c("0-5", "5-10","10-15","15-20","20-25","25-30","30-35","35-40","40-45","45-50","50-55","55-60","60-65"))  
-p1 <- ggplot(altplot1,aes(Slope,Percentage)) + geom_bar(data=subset(altplot1,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot1,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=12),axis.title=element_text(size=14,face="bold"))+ labs(title = "", y = "Percentage", x = "Slope (grades)")   
+p1 <- ggplot(altplot1,aes(Slope,Percentage)) + geom_bar(data=subset(altplot1,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot1,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=8,face="bold"),axis.title=element_text(size=10,face="bold"))+ labs(title = "b. Slope", y = "Percentage", x = "Grades")   
 p1 <- p1 + theme( 
   panel.background = element_rect(fill = "transparent",colour = NA), 
   panel.grid.minor = element_blank(), 
   panel.grid.major = element_blank(), 
   plot.background = element_rect(fill = "transparent",colour = NA) 
 )
-plot(p1)
-pdf(file = "~output/Figura2B.pdf",width = 5,height = 12)
 ```
 
 ### Cost to potential hydrology
 
 ```{r echo=TRUE, results='hide'}
 altplot2$Cost <- factor (altplot2$Cost, levels = c("0-1000", "1000-2000","2000-3000","3000-4000","4000-5000","5000-6000","6000-7000","7000-8000","8000-9000","9000-10000","10000-11000","11000-12000","12000-13000"))  
-p2 <- ggplot(altplot2,aes(Cost,Percentage)) + geom_bar(data=subset(altplot2,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot2,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=12),axis.title=element_text(size=14,face="bold"))+ labs(title = "", y = "Percentage", x = "Cost to potental hydrology (seconds)")   
+p2 <- ggplot(altplot2,aes(Cost,Percentage)) + geom_bar(data=subset(altplot2,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot2,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=8,face="bold"),axis.title=element_text(size=10,face="bold"))+ labs(title = "c. Cost to potential hydrology", y = "Percentage", x = "Seconds")   
 p2 <- p2 + theme( 
   panel.background = element_rect(fill = "transparent",colour = NA), 
   panel.grid.minor = element_blank(), 
   panel.grid.major = element_blank(), 
   plot.background = element_rect(fill = "transparent",colour = NA) 
 )
-plot(p2)
-pdf(file = "~output/Figura2C.pdf",width = 5,height = 12)
 ```
 
-### Cost to potential hydrology
+### Cost to potential wetland areas
 
 ```{r echo=TRUE, results='hide'}
 altplot3$Cost <- factor (altplot3$Cost, levels = c("0-1000", "1000-2000","2000-3000","3000-4000","4000-5000","5000-6000","6000-7000","7000-8000","8000-9000","9000-10000","10000-11000","11000-12000"))  
-p3 <- ggplot(altplot3,aes(Cost,Percentage)) + geom_bar(data=subset(altplot3,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot3,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=12),axis.title=element_text(size=14,face="bold"))+ labs(title = "", y = "Percentage", x = "Cost to wetland areas (seconds)") 
+p3 <- ggplot(altplot3,aes(Cost,Percentage)) + geom_bar(data=subset(altplot3,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot3,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=8,face="bold"),axis.title=element_text(size=10,face="bold"))+ labs(title = "d. Cost to wetland cells", y = "Percentage", x = "Seconds") 
 p3 <- p3 + theme( 
   panel.background = element_rect(fill = "transparent",colour = NA), 
   panel.grid.minor = element_blank(), 
   panel.grid.major = element_blank(), 
   plot.background = element_rect(fill = "transparent",colour = NA) 
 )
-plot(p3)
-pdf(file = "~output/Figura2D.pdf",width = 5,height = 12)
 ```
 
 ### Visual prominence
 
 ```{r echo=TRUE, results='hide'}
 altplot4$Index <- factor (altplot4$Index, levels = c("0-20", "20-40","40-60","60-80","80-100","100-120","120-140","140-160","160-180","180-200"))  
-p4 <- ggplot(altplot4,aes(Index,Percentage)) + geom_bar(data=subset(altplot4,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot4,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=12),axis.title=element_text(size=14,face="bold"))+ labs(title = "", y = "Percentage", x = "Prominence visual index")  
+p4 <- ggplot(altplot4,aes(Index,Percentage)) + geom_bar(data=subset(altplot4,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot4,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=8,face="bold"),axis.title=element_text(size=10,face="bold"))+ labs(title = "e. Visual Prominence", y = "Percentage", x = "Visible cells number")  
 p4 <- p4 + theme( 
   panel.background = element_rect(fill = "transparent",colour = NA), 
   panel.grid.minor = element_blank(), 
   panel.grid.major = element_blank(), 
   plot.background = element_rect(fill = "transparent",colour = NA) 
 )
-plot(p4)
-pdf(file = "~output/Figura2E.pdf",width = 5,height = 12)
 ```
 
+
+### create Figure 6
+
+```{r echo=TRUE, results='hide'}
+p / p1 / p2 / p3 / p4
+
+png(file = "~/output/Figure6.png",width = 1000,height = 1200)
+```
