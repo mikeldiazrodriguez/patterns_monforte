@@ -13,11 +13,11 @@ This repository contains data and code to enable reproducibility of the paper "A
 ## R Packages used
 [dismo](https://cran.r-project.org/web/packages/dismo/dismo.pdf) - Methods for species distribution modelling.
 
-[ggplot2](https://rdrr.io/cran/geostatsp/) - Geostatistical Modelling with Likelihood and Bayes.
-
-[ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html) - Package for creating graphics.
+[geostatsp](https://rdrr.io/cran/geostatsp/) - Geostatistical Modelling with Likelihood and Bayes.
 
 [GGally](https://cran.r-project.org/web/packages/GGally/index.html) - This package is a plotting system based on the grammar of graphics.
+
+[ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html) - Package for creating graphics.
 
 [maps](https://cran.r-project.org/web/packages/maps/index.html) - Display of maps.
 
@@ -25,7 +25,11 @@ This repository contains data and code to enable reproducibility of the paper "A
 
 [MASS](https://cran.r-project.org/web/packages/MASS/MASS.pdf) - Functions and datasets to support Venables and Ripley.
 
+[patchwork](https://cran.r-project.org/web/packages/patchwork/index.html) - Package for combining multiple plots.
+
 [plyr](https://cran.r-project.org/web/packages/plyr/index.html) - Set of tools that solves problems relates with applying or combining data.
+
+[raster](https://cran.r-project.org/web/packages/raster/index.html) - Reading, writing, manipulating, analysing and modelling of spatial data.
 
 [readxl](https://cran.r-project.org/web/packages/readxl/index.html) - Package for read excel files.
 
@@ -37,7 +41,9 @@ This repository contains data and code to enable reproducibility of the paper "A
 
 [spatstat](https://cran.r-project.org/web/packages/spatstat/index.html) - Toolbox for analysing Spatial Point Patterns.
 
-[raster](https://cran.r-project.org/web/packages/raster/index.html) - Reading, writing, manipulating, analysing and modelling of spatial data.
+[tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html) - Data representations and API design.
+
+
 
 
 
