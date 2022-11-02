@@ -1,10 +1,20 @@
-# A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin (NW Iberian Peninsula): source code and data
-This repository contains data and code to enable reproducibility of the paper "A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin (NW Iberian Peninsula)".
+# A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin, NW Iberian Peninsula. Source code and data
+This repository contains data and code to enable reproducibility of the paper: Díaz-Rodríguez, M.<a href="https://orcid.org/0000-0002-2703-1507">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="14" height="14" />
+</a>, Fábregas-Valcarce, R.<a href="https://orcid.org/0000-0002-7940-6884">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="14" height="14" />
+</a> & Pérez-Alberti, A.<a href="https://orcid.org/0000-0001-7428-4622">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="14" height="14" />
+</a>. *In press*. "A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin, NW Iberian Peninsula".
 
 ## Repository structure
 /csv/*.csv ... contains CSV files with the data of the sites and the random points.
 
+/figures/ ... folder with the figures used in the paper in PDF format.
+
 /grids/ ... folder with the layers of the covariates used in GLM.
+
+/output/ ... folder with the output files in PDF format.
 
 /shp/ ... folder with the layers of the sites, the random points and the study area in vector format.
 
