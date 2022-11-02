@@ -53,7 +53,39 @@ This repository contains data and code to enable reproducibility of the paper: D
 
 [tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html) - Data representations and API design.
 
+### References about the packages
 
+Baddeley, A., Turner, R., Rubak, E., 2020. spatstat: Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests.
+
+Becker, R.A., Wilks, A.R., Brownrigg, R., Minka, T.P., Deckmyn, A., 2021. maps: Draw Geographical Maps.
+
+Bivand, R., Lewin-Koh, N., Pebesma, E., Archer, E., Baddeley, A., Bearman, N., Bibiko, H.-J., Brey, S., Callahan, J., Carrillo, G., Dray, S., Forrest, D., Friendly, M., Giraudoux, P., Golicher, D., Gómez Rubio, V., Hausmann, P., Hufthammer, K.O., Jagger, T., Johnson, K., Lewis, M., Luque, S., MacQueen, D., Niccolai, A., Pebesma, E., Prepiñán Lamigueiro, O., Plunkett, E., Rubak, E., Short, T., Snow, G., Stabler, B., Stokely, M., Turner, R., 2020a. maptools: Tools for Handling Spatial Objects.
+
+Bivand, R., Keitt, T., Rowlingson, B., Pebesma, E., Sumner, M., Hijmans, R., Rouault, E., Warmerdam, F., Ooms, J., Rundel, C., 2020b. rgdal: Bindings for the “Geospatial” Data Abstraction Library.
+
+Bivand, R., Rundel, C., Pebesma, E., Stuetz, R., Hufthammer, K.O., Giraudoux, P., Davis, M., Santilli, S., 2020c. rgeos: Interface to Geometry Engine - Open Source ('GEOS’).
+
+Brown, P.E., 2015. Model-Based Geostatistics the Easy Way. Journal of Statistical Software 63, 1–24. doi:10.18637/jss.v063.i12
+
+Hijmans, R.J., Phillips, S., Leathwick, J., Elith, J., 2017. dismo: Species Distribution Modeling.
+
+Hijmans, R.J., Etten, J. van, Sumner, M., Cheng, J., Baston, D., Bevan, A., Bivand, R., Busetto, L., Canty, M., Forrest, D., Ghosh, A., Golicher, D., Gray, J., Greenberg, J.A., Hiemstra, P., Hingee, K., Karney, C., Mattiuzzi, M., Mosher, S., Nowosad, J., Pebesma, E., Perpinan Lamigueiro, O., Racine, E.B., Rowlingson, B., Shortridge, A., Venables, B., Wueest, R., 2020. raster: Geographic Data Analysis and Modeling.
+
+Pebesma, E., Bivand, R., Rowlingson, B., Gomez-Rubio, V., Hijmans, R., Sumner, M., MacQueen, D., Lemon, J., Lindgren, F., O’Brien, J., O’Rourke, J., 2020. sp: Classes and Methods for Spatial Data.
+
+Pedersen, T.L., 2022. patchwork: The Composer of Plots.
+
+Ripley, B., Venables, B., Bates, D.M., Hornik, K., Gebhardt, A., Firth, D., 2020. MASS: Support Functions and Datasets for Venables and Ripley’s MASS.
+
+Schloerke, B., Cook, D., Larmarange, J., Briatte, F., Marbach, M., Thoen, E., Elberg, A., Toomet, O., Crowley, J., Hofmann, H., Wickham, H., 2021. GGally: Extension to “ggplot2.”
+
+Wickham, H., 2020. plyr: Tools for Splitting, Applying and Combining Data.
+
+Wickham, H., Bryan, J., Kalicinski, M., Valery, K., Leitienne, C., Colbert, B., Hoerl, D., Miller, E., 2019a. readxl: Read Excel Files.
+
+Wickham, H., Averick, M., Bryan, J., Chang, W., D’Agostino McGowan, L., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Lin Pedersen, T., Miller, E., Milton Bache, S., Müller, K., Ooms, J., Robinson, D., Piage Seidel, D., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., Yutani, H., 2019b. Welcome to the tidyverse. Journal of Open Source Software 4, 1686. doi:10.21105/joss.01686
+
+Wickham, H., Chang, W., Henry, L., Pedersen, T.L., Takahashi, K., Wilke, C., Woo, K., Yutani, H., Dunnington, D., 2020. ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics.
 
 
 
