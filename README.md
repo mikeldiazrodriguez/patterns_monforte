@@ -20,6 +20,8 @@ This repository contains data and code to enable reproducibility of the paper: D
 
 /xls/ ... contains XLS files with the data of the variables to execute Pearson's Correlation.
 
+Diaz_et_al_22.Rmd ... Rmarkdown file to reproduce the analysis.
+
 ## R Packages used
 [dismo](https://cran.r-project.org/web/packages/dismo/dismo.pdf) - Methods for species distribution modelling.
 
