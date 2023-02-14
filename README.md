@@ -14,7 +14,7 @@ This repository contains data and code to enable reproducibility of the paper: D
 
 /grids/ ... folder with the layers of the covariates used in GLM.
 
-/output/ ... folder with the output files in PDF format.
+/output/ ... folder with the output files.
 
 /shp/ ... folder with the layers of the sites, the random points and the study area in vector format.
 
@@ -90,7 +90,21 @@ Wickham, H., Averick, M., Bryan, J., Chang, W., D’Agostino McGowan, L., Franç
 Wickham, H., Chang, W., Henry, L., Pedersen, T.L., Takahashi, K., Wilke, C., Woo, K., Yutani, H., Dunnington, D., 2020. ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics.
 
 
+## Source code and data reference
+Mikel Díaz-Rodríguez<a href="https://orcid.org/0000-0002-2703-1507">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="14" height="14" />
+</a>, Ramón Fábregas-Valcarce<a href="https://orcid.org/0000-0002-7940-6884">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="14" height="14" />
+</a> & Pérez-Alberti, A.<a href="https://orcid.org/0000-0001-7428-4622">
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="14" height="14" />
+</a>. (2022, November 3). A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin, NW Iberian Peninsula. Source code and data (v.1.1). Zenodo. https://doi.org/10.5281/zenodo.7276627
 
+[![DOI](https://zenodo.org/badge/467441117.svg)](https://zenodo.org/badge/latestdoi/467441117)
+
+[Link in Zenodo](https://zenodo.org/badge/latestdoi/467441117) 
+
+## License
+CC-BY 4.0
 
 
 
