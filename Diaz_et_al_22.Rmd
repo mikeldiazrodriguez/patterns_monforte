@@ -1,10 +1,10 @@
 ---
 title: "A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin, NW Iberian Peninsula"
 author: "Mikel Diaz-Rodriguez, Ramon Fabregas-Valcarce and Augusto Perez-Alberti"
-date: "November 2th, 2022"
+date: "February 8th, 2023"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -31,10 +31,56 @@ ipak <- function(pkg){
   sapply(pkg, require, character.only = TRUE)
 }
 # install all the packages
-packages <- c("GGally", "readxl", "rgdal", "rgeos", "sp", "spatstat", "tidyverse", "dismo", "MASS", "ggplot2", "plyr", "maps", "maptools", "raster", "geostatsp", "patchwork")
+packages <- c("GGally", "readxl", "rgdal", "rgeos", "sp", "spatstat", "tidyverse", "dismo", "MASS", "ggplot2", "plyr", "maps", "maptools", "raster", "geostatsp", "patchwork", "vioplot")
 ipak(packages)
 ```
 
+# Violin plot (Figure 2)
+
+```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+# Set the working directory
+setwd("~/csv")
+
+# import data
+artefacts <- read.table(file="artefacts.csv",header=TRUE, sep=";", stringsAsFactors=F, dec=".")
+artefacts_n <- read.table(file="artefacts_n.csv",header=TRUE, sep=";", stringsAsFactors=F, dec=".")
+
+# Create Figure 2a 
+
+vioplot(artefacts$Artefacts,
+         col = 8,               
+         rectCol = "black",       
+         lineCol = "white",     
+         colMed = "blue",     
+         border = "black",      
+         pchMed = 16,           
+         plotCentre = "points", 
+         ylab = "Number of artefacts",
+	   xlab = "Number of sites",  
+         main = "a. Violin plot with all artefats per sites") 
+
+stripchart(artefacts$Artefacts, method = "jitter", col = "#cf645e",
+            vertical = TRUE, pch = 19, add = TRUE)
+
+# Create Figure 2b
+
+vioplot(artefacts_n$Artefacts,
+         col = 8,               
+         rectCol = "black",       
+         lineCol = "white",     
+         colMed = "blue",     
+         border = "black",      
+         pchMed = 16,           
+         plotCentre = "points", 
+         ylab = "Number of artefacts",
+	   xlab = "Number of sites",  
+         main = "b. Violin plot without 1 overrepresented site") 
+
+stripchart(artefacts_n$Artefacts, method = "jitter", col = "#cf645e",
+            vertical = TRUE, pch = 19, add = TRUE)
+
+```
 
 # Complete Spatial Randomness
 ### Import the data used in CSR analysis
@@ -122,7 +168,7 @@ LinhomFunction <- envelope(sitesSub.ppp,Linhom, nsim=sims,rank=nrank, correction
 GFunction <- envelope(sitesSub.ppp,Gest, nsim=sims,rank=nrank, correction="best")
 GinhomFunction <- envelope(sitesSub.ppp,Ginhom, nsim=sims,rank=nrank, correction="best")
 
-# create Figure 2
+# create Figure 4
 par(mar=c(4, 4, 4, 4), mfrow=c(3,2))
 plot(Kfunction,main="a. K Function (homogeneous)",legend=FALSE)
 plot(KinhomFunction,main="b. K Function (inhomogeneous)",legend=FALSE)
@@ -131,7 +177,7 @@ plot(LinhomFunction,main="d. L Function (inhomogeneous)",legend=FALSE)
 plot(GFunction,main="e. G Function (homogeneous)",legend=FALSE) 
 plot(GinhomFunction,main="f. G Function (inhomogeneous)",legend=FALSE)
 par(mfrow=c(1,1))
-png(file = "~/output/Figure2.png",width = 900,height = 1200)
+png(file = "~/output/Figure4.png",width = 900,height = 1200)
 dev.off()
 ```
 
@@ -139,7 +185,7 @@ dev.off()
 
 ```{r echo=TRUE, results='hide'}
 # Set the working directory
-setwd("~/xls")
+setwd("~/csv")
 
 # import data
 dat <- read.table(file="dat.csv",header=TRUE, sep=";", stringsAsFactors=F, dec=".")
@@ -157,7 +203,7 @@ ggpairs(sample_data)
 ggcorr(sample_data, method=c("everything", "pearson"))
 
 # Export file
-png(file = "~/output/Figure3.png",width = 900,height = 1200)
+png(file = "~/output/Figure5.png",width = 900,height = 1200)
 ```
 
 # GLM
@@ -200,12 +246,12 @@ lcp_cost <- projectRaster(lcp_c, elevation)
 
 ```{r, message=FALSE, warning=FALSE, paged.print=FALSE}
 # GLM creation
-covariates <- stack(elevation, tot_inso, aspect, slope, visual_prom, tpi100, wetland_cost, geol_cost, hydro_cost, lcp_cost, wind, tpi500)
-names(covariates) <- c("elevation", "tot_inso", "aspect", "slope", "visual_prom", "tpi100", "wetland_cost", "geol_cost","hydro_cost", "lcp_cost", "wind", "tpi500")
+covariates <- stack(elevation, tot_inso, aspect, slope, visual_prom, tpi100, wetland_cost, geol_cost, hydro_cost, lcp_cost, wind)
+names(covariates) <- c("elevation", "tot_inso", "aspect", "slope", "visual_prom", "tpi100", "wetland_cost", "geol_cost","hydro_cost", "lcp_cost", "wind")
 locvals <- data.frame(extract(covariates, locations))
 locvals$site <- locations$CID==1
 
-mod <- glm(site~elevation+tot_inso+aspect+slope+visual_prom+tpi100+wetland_cost+geol_cost+hydro_cost+lcp_cost+wind+tpi500, data=locvals, family=binomial(logit))
+mod <- glm(site~elevation+tot_inso+aspect+slope+visual_prom+tpi100+wetland_cost+geol_cost+hydro_cost+lcp_cost+wind, data=locvals, family=binomial(logit))
 summary(mod)
 mod2 <- stepAIC(mod)  # More oncs
 mod2$anova
@@ -261,7 +307,7 @@ hydro.rh <- rhohat(sppp, hydro, confidence=0.95)
 vipro.rh <- rhohat(sppp, vipro, confidence=0.95)
 ```
 
-### Create Figure 5
+### Create Figure 7
 
 ```{r echo=TRUE, results='hide'}
 par(mar=c(4, 4, 4, 4), mfrow=c(3,2))
@@ -271,7 +317,7 @@ plot(hydro.rh, main="c. Cost to potential hydrology cells", xlab="Seconds", ylab
 plot(wetl.rh, main="d. Cost to potential wetland cells", xlab="Seconds", ylab="", legend=FALSE, cex.axis=0.9)
 plot(vipro.rh, main="e. Visual Prominence", xlab="Visible cells number", ylab="", legend=FALSE, cex.axis=0.9)
 par(mfrow=c(1,1))
-png(file = "~/output/Figure5.png",width = 900,height = 1200)
+png(file = "~/output/Figure7.png",width = 900,height = 1200)
 dev.off()
 ```
 
@@ -353,10 +399,10 @@ p4 <- p4 + theme(
 ```
 
 
-### create Figure 6
+### create Figure 8
 
 ```{r echo=TRUE, results='hide'}
 p / p1 / p2 / p3 / p4
 
-png(file = "~/output/Figure6.png",width = 1000,height = 1200)
+png(file = "~/output/Figure8.png",width = 1000,height = 1200)
 ```
