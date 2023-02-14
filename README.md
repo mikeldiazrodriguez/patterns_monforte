@@ -101,7 +101,7 @@ Mikel Díaz-Rodríguez<a href="https://orcid.org/0000-0002-2703-1507">
 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="14" height="14" />
 </a> & Pérez-Alberti, A.<a href="https://orcid.org/0000-0001-7428-4622">
 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="14" height="14" />
-</a>. (2022, November 3). A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin, NW Iberian Peninsula. Source code and data (v.1.1). Zenodo. https://doi.org/10.5281/zenodo.7276627
+</a>. (2023, February 14). A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin, NW Iberian Peninsula. Source code and data. Zenodo. https://doi.org/10.5281/zenodo.7638659
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7638659.svg)](https://doi.org/10.5281/zenodo.7638659)
 
