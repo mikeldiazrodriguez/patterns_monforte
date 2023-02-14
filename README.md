@@ -55,7 +55,11 @@ Diaz_et_al_22.Rmd ... Rmarkdown file to reproduce the analysis.
 
 [tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html) - Data representations and API design.
 
+[vioplot](https://cran.r-project.org/web/packages/vioplot/index.html) - This package allows extensive customisation of violin plots.
+
 ### References about the packages
+
+Adler, D., Kelly, T.S., 2022. vioplot: violin plot. R package version 0.4.0.
 
 Baddeley, A., Turner, R., Rubak, E., 2020. spatstat: Spatial Point Pattern Analysis, Model-Fitting, Simulation, Tests.
 
