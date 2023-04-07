@@ -3,8 +3,8 @@ title: "A predictive model for Palaeolithic sites: A case study of Monforte de L
 author: "Mikel Diaz-Rodriguez, Ramon Fabregas-Valcarce and Augusto Perez-Alberti"
 date: "February 14th, 2023"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -350,7 +350,7 @@ p <- p + theme(
 
 ```{r echo=TRUE, results='hide'}
 altplot1$Slope <- factor (altplot1$Slope, levels = c("0-5", "5-10","10-15","15-20","20-25","25-30","30-35","35-40","40-45","45-50","50-55","55-60","60-65"))  
-p1 <- ggplot(altplot1,aes(Slope,Percentage)) + geom_bar(data=subset(altplot1,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot1,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=8,face="bold"),axis.title=element_text(size=10,face="bold"))+ labs(title = "b. Slope", y = "Percentage", x = "Grades")   
+p1 <- ggplot(altplot1,aes(Slope,Percentage)) + geom_bar(data=subset(altplot1,Category=="Terrain"),stat="identity", fill="gray") + geom_line(data=subset(altplot1,Category=="Site"), aes(group="Category", colour="red"),size=1.5) + guides(colour=FALSE) + theme(axis.text=element_text(size=8,face="bold"),axis.title=element_text(size=10,face="bold"))+ labs(title = "b. Slope", y = "Percentage", x = "Degrees")   
 p1 <- p1 + theme( 
   panel.background = element_rect(fill = "transparent",colour = NA), 
   panel.grid.minor = element_blank(), 
