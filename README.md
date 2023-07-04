@@ -5,7 +5,7 @@ This repository contains data and code to enable reproducibility of the paper: D
 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="14" height="14" />
 </a> & Pérez-Alberti, A.<a href="https://orcid.org/0000-0001-7428-4622">
 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="14" height="14" />
-</a>. *In press*. "A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin, NW Iberian Peninsula". Journal of Archaeological Science: Reports, Vol. 49. https://doi.org/10.1016/j.jasrep.2023.10401.
+</a>. 2023. "A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin, NW Iberian Peninsula". Journal of Archaeological Science: Reports, Vol. 49. https://doi.org/10.1016/j.jasrep.2023.10401.
 
 ## Repository structure
 /csv/*.csv ... contains CSV files with the data of the sites and the random points.
