@@ -16,6 +16,8 @@ knitr::opts_chunk$set(eval = FALSE,
 
 This document contains code to enable reproducibility of the paper "A predictive model for Palaeolithic sites: A case study of Monforte de Lemos basin, NW Iberian Peninsula".
 
+Part of the code has been based on Carrero-Pazos 2023 (DOI: 10.32028/9781803276328).
+
 The steps indicated in the following lines allow to reproduce the analyses carried out.
 
 # Packages used
@@ -253,7 +255,7 @@ locvals$site <- locations$CID==1
 
 mod <- glm(site~elevation+tot_inso+aspect+slope+visual_prom+tpi100+wetland_cost+geol_cost+hydro_cost+lcp_cost+wind, data=locvals, family=binomial(logit))
 summary(mod)
-mod2 <- stepAIC(mod)  # More oncs
+mod2 <- stepAIC(mod)  
 mod2$anova
 
 # Table with the results of predictive analysis
@@ -287,7 +289,7 @@ hydro_cost <- raster("~/grids/hydrology_cost_monforte.tiff")
 visual_prom <- raster("~/grids/visual_prominence_monforte.tif")
 ```
 
-### Achieve monovariate patron
+### Achieve monovariate pattern
 
 ```{r echo=TRUE, results='hide'}
 elev <- as.im(as(elevation,"SpatialGridDataFrame"))
