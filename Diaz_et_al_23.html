@@ -363,6 +363,7 @@ Augusto Perez-Alberti</h4>
 <p>This document contains code to enable reproducibility of the paper “A
 predictive model for Palaeolithic sites: A case study of Monforte de
 Lemos basin, NW Iberian Peninsula”.</p>
+<p>Part of the code has been based on Carrero-Pazos 2023 (DOI: 10.32028/9781803276328).</p>
 <p>The steps indicated in the following lines allow to reproduce the
 analyses carried out.</p>
 </div>
@@ -583,7 +584,7 @@ locvals$site &lt;- locations$CID==1
 
 mod &lt;- glm(site~elevation+tot_inso+aspect+slope+visual_prom+tpi100+wetland_cost+geol_cost+hydro_cost+lcp_cost+wind, data=locvals, family=binomial(logit))
 summary(mod)
-mod2 &lt;- stepAIC(mod)  # More oncs
+mod2 &lt;- stepAIC(mod)  
 mod2$anova
 
 # Table with the results of predictive analysis
@@ -615,8 +616,8 @@ wetland_cost &lt;- raster(&quot;~/grids/wetland_cost_monforte.tiff&quot;)
 hydro_cost &lt;- raster(&quot;~/grids/hydrology_cost_monforte.tiff&quot;)
 visual_prom &lt;- raster(&quot;~/grids/visual_prominence_monforte.tif&quot;)</code></pre>
 </div>
-<div id="achieve-monovariate-patron" class="section level3">
-<h3>Achieve monovariate patron</h3>
+<div id="achieve-monovariate-pattern" class="section level3">
+<h3>Achieve monovariate pattern</h3>
 <pre class="r"><code>elev &lt;- as.im(as(elevation,&quot;SpatialGridDataFrame&quot;))
 slo &lt;- as.im(as(slope,&quot;SpatialGridDataFrame&quot;))
 wetl &lt;- as.im(as(wetland_cost,&quot;SpatialGridDataFrame&quot;))
